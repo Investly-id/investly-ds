@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
 
@@ -19,7 +14,7 @@ export type ModalLoadingHandle = {
 const ModalLoading = forwardRef<ModalLoadingHandle, Props>((_, ref) => {
   const [visibleCount, setVisibleCount] = useState<number>(0)
 
-  const isVisible = useMemo(() => !!visibleCount, [visibleCount])
+  const isVisible = React.useMemo(() => !!visibleCount, [visibleCount])
 
   useImperativeHandle(ref, () => ({
     show: () => {

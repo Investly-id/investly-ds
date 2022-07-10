@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import {
   ImageBackground,
   ImageBackgroundProps,
@@ -16,8 +16,8 @@ interface Props extends Omit<ImageBackgroundProps, 'style' | 'imageStyle'> {
 }
 
 const RNImageBg = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props.style])
-  const imageStyle = useMemo(
+  const style = React.useMemo(() => getTwStyle(props.style), [props.style])
+  const imageStyle = React.useMemo(
     () => getTwStyle(props.imageStyle),
     [props.imageStyle]
   )

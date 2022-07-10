@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { StyleProp, TextStyle } from 'react-native'
 
 import { RNView } from '../../Primitives'
@@ -60,7 +60,7 @@ export const useInputFieldStyle = ({
   secure,
   value,
 }: InputFieldStyle) => {
-  const textInputWrapperStyle = useMemo(() => {
+  const textInputWrapperStyle = React.useMemo(() => {
     let style =
       'px-4 border border-neutral-300 bg-neutral-200 flex-row rounded-full items-center '
     if (focus) {
@@ -75,7 +75,7 @@ export const useInputFieldStyle = ({
     return style + styleConfig.inputWrapper[size ?? 'md']
   }, [focus, error, size, multiline])
 
-  const textInputStyle = useMemo(() => {
+  const textInputStyle = React.useMemo(() => {
     let style = 'fill border-0 items-center font-inter-regular '
     if (multiline) {
       style += ' h-[84px] '
@@ -86,7 +86,7 @@ export const useInputFieldStyle = ({
     return style + styleConfig.input[size ?? 'md']
   }, [secure, multiline, size, value])
 
-  const textStyle = useMemo(() => {
+  const textStyle = React.useMemo(() => {
     let style = 'text-neutral-700 font-inter-regular '
     if (disabled) {
       style += ' text-neutral-400 '
@@ -94,7 +94,7 @@ export const useInputFieldStyle = ({
     return style + styleConfig.inputText[size ?? 'md']
   }, [size, disabled])
 
-  const memoContainerStyle = useMemo(() => {
+  const memoContainerStyle = React.useMemo(() => {
     return [getTwStyle(containerStyle)]
   }, [containerStyle])
 

@@ -1,10 +1,11 @@
-import React, { useMemo, useCallback, useState } from 'react'
-import { ViewStyle, StyleProp } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { StyleProp, ViewStyle } from 'react-native'
+
+import { RNText, RNTouchableOpacity, RNView } from '../Primitives'
 import { colors } from '../Styles'
 import { ColorVariant } from '../Types/Component'
 import ButtonLink from './ButtonLink'
 import Icon, { IconName } from './Icon'
-import { RNText, RNTouchableOpacity, RNView } from '../Primitives'
 
 interface Props {
   variant?: ColorVariant
@@ -46,15 +47,15 @@ const Message: React.FC<Props> = ({
         </RNView>
       )
     },
-    [variant, leftIcon, rightIcon],
+    [variant, leftIcon, rightIcon]
   )
 
-  const content = useMemo(() => {
+  const content = React.useMemo(() => {
     if (typeof children === 'string') {
       return (
         <RNView style={`flex-row ${buttonText ? '' : 'items-center'}`}>
           {leftIcon && renderIcon('left')}
-          <RNView style="fill items-start">
+          <RNView style='fill items-start'>
             <RNText
               style={'font-inter-regular text-3 leading-5 text-neutral-700'}
             >
@@ -64,8 +65,8 @@ const Message: React.FC<Props> = ({
               <ButtonLink
                 variant={variant}
                 onPress={buttonOnPress}
-                style="mt-1"
-                size="sm"
+                style='mt-1'
+                size='sm'
               >
                 {buttonText}
               </ButtonLink>

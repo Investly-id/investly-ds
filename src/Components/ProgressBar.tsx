@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 import { RNView } from '../Primitives'
 
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const ProgressBar: React.FC<Props> = ({ progress, height, hideOnFull }) => {
-  const progressStyle = useMemo(() => {
+  const progressStyle = React.useMemo(() => {
     return ` w-[${progress}%] h-[${height}px] bg-purple-600`
   }, [progress, height])
 

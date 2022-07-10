@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { FlatList, FlatListProps, StyleProp, ViewStyle } from 'react-native'
 
 import { getTwStyle } from '../Utils'
@@ -14,12 +14,12 @@ interface Props
 }
 
 const RNFlatList = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
-  const contentContainerStyle = useMemo(
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
+  const contentContainerStyle = React.useMemo(
     () => getTwStyle(props.contentContainerStyle),
     [props]
   )
-  const columnWrapperStyle = useMemo(
+  const columnWrapperStyle = React.useMemo(
     () => getTwStyle(props.columnWrapperStyle),
     [props]
   )

@@ -1,10 +1,11 @@
-import React, { useMemo, useCallback } from 'react'
-import { ViewStyle, StyleProp } from 'react-native'
-import { colors } from '../Styles'
-import { getTwStyle } from '../Utils'
-import { ColorVariant } from '../Types/Component'
-import Icon, { IconName } from './Icon'
+import React, { useCallback } from 'react'
+import { StyleProp, ViewStyle } from 'react-native'
+
 import { RNText, RNView } from '../Primitives'
+import { colors } from '../Styles'
+import { ColorVariant } from '../Types/Component'
+import { getTwStyle } from '../Utils'
+import Icon, { IconName } from './Icon'
 
 interface Props {
   variant?: ColorVariant
@@ -25,7 +26,7 @@ const Label: React.FC<Props> = ({
   rightIcon,
   variant,
 }) => {
-  const iconSize = useMemo(() => {
+  const iconSize = React.useMemo(() => {
     const sizeMap: { [key: string]: number } = {
       sm: 12,
       md: 16,
@@ -33,7 +34,7 @@ const Label: React.FC<Props> = ({
     return sizeMap[size ?? 'md']
   }, [size])
 
-  const typographyProps = useMemo(() => {
+  const typographyProps = React.useMemo(() => {
     let color = 'white'
     if (!filled) {
       color = colors[variant ?? 'purple'][500]
@@ -52,7 +53,7 @@ const Label: React.FC<Props> = ({
     }
   }, [size, filled, variant])
 
-  const rippleStyle = useMemo(() => {
+  const rippleStyle = React.useMemo(() => {
     const styleSize: { [key: string]: string } = {
       xs: 'py-[0px] px-[10px]',
       sm: 'py-[0px] px-3',
@@ -90,10 +91,10 @@ const Label: React.FC<Props> = ({
         </RNView>
       )
     },
-    [typographyProps.color, iconSize, leftIcon, rightIcon],
+    [typographyProps.color, iconSize, leftIcon, rightIcon]
   )
 
-  const content = useMemo(() => {
+  const content = React.useMemo(() => {
     if (typeof children === 'string') {
       return (
         <RNView style={'flex-row justify-center items-center'}>

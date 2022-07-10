@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import {
   StyleProp,
   TouchableOpacity,
@@ -15,7 +15,7 @@ interface Props extends Omit<TouchableOpacityProps, 'style'> {
 export type RNTouchableOpacityProp = Props
 
 const RNTouchableOpacity = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
 
   return <TouchableOpacity {...props} style={style} />
 }

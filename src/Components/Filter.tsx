@@ -1,22 +1,23 @@
-import React, { useMemo, useCallback } from "react";
-import { ViewStyle, StyleProp } from "react-native";
-import { colors } from "../Styles";
-import { getTwStyle } from "../Utils";
-import Ripple from "./Libraries/ButtonRipple";
-import { ColorVariant, ControlSize } from "../Types/Component";
-import Icon, { IconName } from "./Icon";
-import { RNText, RNView } from "../Primitives";
+import React, { useCallback } from 'react'
+import { StyleProp, ViewStyle } from 'react-native'
+
+import { RNText, RNView } from '../Primitives'
+import { colors } from '../Styles'
+import { ColorVariant, ControlSize } from '../Types/Component'
+import { getTwStyle } from '../Utils'
+import Icon, { IconName } from './Icon'
+import Ripple from './Libraries/ButtonRipple'
 
 interface Props {
-  active?: boolean;
-  variant?: ColorVariant;
-  size?: ControlSize;
-  onPress?: (value?: any) => void;
-  style?: StyleProp<ViewStyle> | string;
-  disabled?: boolean;
-  children?: React.ReactNode | string;
-  leftIcon?: IconName;
-  rightIcon?: IconName;
+  active?: boolean
+  variant?: ColorVariant
+  size?: ControlSize
+  onPress?: (value?: any) => void
+  style?: StyleProp<ViewStyle> | string
+  disabled?: boolean
+  children?: React.ReactNode | string
+  leftIcon?: IconName
+  rightIcon?: IconName
 }
 
 const Filter: React.FC<Props> = ({
@@ -30,67 +31,67 @@ const Filter: React.FC<Props> = ({
   rightIcon,
   variant,
 }) => {
-  const iconSize = useMemo(() => {
+  const iconSize = React.useMemo(() => {
     const sizeMap: { [key: string]: number } = {
       sm: 12,
       md: 16,
-    };
-    return sizeMap[size ?? "md"];
-  }, [size]);
+    }
+    return sizeMap[size ?? 'md']
+  }, [size])
 
-  const typographyProps = useMemo(() => {
-    let color = colors.neutral[700];
+  const typographyProps = React.useMemo(() => {
+    let color = colors.neutral[700]
     if (active) {
-      color = "white";
+      color = 'white'
     } else if (disabled) {
-      color = colors.neutral[400];
+      color = colors.neutral[400]
     }
 
     const prop: Record<ControlSize, string> = {
-      sm: "text-3 leading-[20px]",
-      md: "text-[14px] leading-[22px]",
-    };
+      sm: 'text-3 leading-[20px]',
+      md: 'text-[14px] leading-[22px]',
+    }
 
     return {
       color,
-      ...getTwStyle(prop[size! || "md"]),
-      ...getTwStyle("font-inter-bold"),
-    };
-  }, [size, active, disabled]);
+      ...getTwStyle(prop[size! || 'md']),
+      ...getTwStyle('font-inter-bold'),
+    }
+  }, [size, active, disabled])
 
-  const rippleStyle = useMemo(() => {
+  const rippleStyle = React.useMemo(() => {
     const styleSize: { [key: string]: string } = {
-      sm: "py-[6px]",
-      md: "py-[9px]",
-    };
+      sm: 'py-[6px]',
+      md: 'py-[9px]',
+    }
 
     return [
-      getTwStyle(styleSize[size ?? "md"]),
-      getTwStyle("rounded-full justify-center px-4"),
+      getTwStyle(styleSize[size ?? 'md']),
+      getTwStyle('rounded-full justify-center px-4'),
       getTwStyle(
         active
           ? disabled
-            ? "bg-neutral-400 border-neutral-400"
+            ? 'bg-neutral-400 border-neutral-400'
             : `bg-${variant}-600 border-${variant}-600`
-          : "border border-neutral-300"
+          : 'border border-neutral-300'
       ),
       getTwStyle(style),
-    ];
-  }, [size, style, active, variant, disabled]);
+    ]
+  }, [size, style, active, variant, disabled])
 
   const renderIcon = useCallback(
-    (position: "left" | "right") => {
+    (position: 'left' | 'right') => {
       const iconPropsMap = {
         left: leftIcon,
         right: rightIcon,
-      };
+      }
       const iconStyleMap = {
-        left: "pr-2",
-        right: "pl-2",
-      };
+        left: 'pr-2',
+        right: 'pl-2',
+      }
 
-      const iconProps = iconPropsMap[position];
-      const wrapperStyle = iconStyleMap[position];
+      const iconProps = iconPropsMap[position]
+      const wrapperStyle = iconStyleMap[position]
 
       return (
         <RNView style={wrapperStyle}>
@@ -100,26 +101,26 @@ const Filter: React.FC<Props> = ({
             fill={typographyProps.color}
           />
         </RNView>
-      );
+      )
     },
     [typographyProps.color, iconSize, leftIcon, rightIcon]
-  );
+  )
 
-  const content = useMemo(() => {
-    if (typeof children === "string") {
+  const content = React.useMemo(() => {
+    if (typeof children === 'string') {
       return (
-        <RNView style={"flex-row justify-center items-center"}>
-          {leftIcon && renderIcon("left")}
+        <RNView style={'flex-row justify-center items-center'}>
+          {leftIcon && renderIcon('left')}
           <RNText style={typographyProps} numberOfLines={1}>
             {children}
           </RNText>
-          {rightIcon && renderIcon("right")}
+          {rightIcon && renderIcon('right')}
         </RNView>
-      );
+      )
     }
 
-    return children;
-  }, [children, leftIcon, rightIcon, renderIcon, typographyProps]);
+    return children
+  }, [children, leftIcon, rightIcon, renderIcon, typographyProps])
 
   return (
     <Ripple
@@ -127,12 +128,12 @@ const Filter: React.FC<Props> = ({
       style={rippleStyle}
       onPress={onPress}
       disabled={disabled}
-      rippleColor={colors[variant ?? "purple"][400]}
+      rippleColor={colors[variant ?? 'purple'][400]}
     >
       {content}
     </Ripple>
-  );
-};
+  )
+}
 
 Filter.defaultProps = {
   onPress: () => null,
@@ -141,9 +142,9 @@ Filter.defaultProps = {
   children: undefined,
   leftIcon: undefined,
   rightIcon: undefined,
-  variant: "purple",
-  size: "md",
+  variant: 'purple',
+  size: 'md',
   active: true,
-};
+}
 
-export default React.memo(Filter);
+export default React.memo(Filter)

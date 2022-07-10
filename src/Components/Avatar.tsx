@@ -1,14 +1,15 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import {
-  StyleProp,
   ImageProps,
-  ImageStyle,
   ImageSourcePropType,
+  ImageStyle,
+  StyleProp,
 } from 'react-native'
-import Icon from './Icon'
+
 import { RNImage, RNView } from '../Primitives'
-import { getTwStyle } from '../Utils'
 import { AvatarSize } from '../Types/Component'
+import { getTwStyle } from '../Utils'
+import Icon from './Icon'
 
 interface Props extends Omit<ImageProps, 'style' | 'source'> {
   size?: AvatarSize
@@ -18,7 +19,7 @@ interface Props extends Omit<ImageProps, 'style' | 'source'> {
 }
 
 const Button: React.FC<Props> = ({ size, style, source, url, ...props }) => {
-  const imageStyle = useMemo(() => {
+  const imageStyle = React.useMemo(() => {
     let sizeMap: Record<AvatarSize, string> = {
       xs: 'w-4 h-4',
       sm: 'w-6 h-6',
@@ -35,7 +36,7 @@ const Button: React.FC<Props> = ({ size, style, source, url, ...props }) => {
     ]
   }, [size, style])
 
-  const iconSize = useMemo(() => {
+  const iconSize = React.useMemo(() => {
     let sizeMap: Record<AvatarSize, number> = {
       xs: 12,
       sm: 16,
@@ -48,14 +49,14 @@ const Button: React.FC<Props> = ({ size, style, source, url, ...props }) => {
     return sizeMap[size ?? 'md']
   }, [size])
 
-  const imageSource = useMemo(() => {
+  const imageSource = React.useMemo(() => {
     return url ? { uri: url } : source
   }, [source, url])
 
   if (!imageSource) {
     return (
       <RNView style={imageStyle}>
-        <Icon name="user" fill="white" size={iconSize} />
+        <Icon name='user' fill='white' size={iconSize} />
       </RNView>
     )
   }

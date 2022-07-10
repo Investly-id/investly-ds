@@ -74,6 +74,7 @@ const ModalBaseView = forwardRef<ModalHandle, Props>(
             </RNView>
             <RNView style={`px-6 pb-8  ${containerStyle}`}>
               {scrollEnabled ? (
+                // @ts-ignore
                 <RNKeyboardAwareScrollView
                   scrollEnabled={scrollEnabled}
                   showsVerticalScrollIndicator={false}

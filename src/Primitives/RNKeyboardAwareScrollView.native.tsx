@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
 import {
   KeyboardAwareScrollView,
@@ -14,11 +14,12 @@ interface Props
   > {
   style?: StyleProp<ViewStyle> | string
   contentContainerStyle?: StyleProp<ViewStyle> | string
+  children: React.ReactNode
 }
 
 const RNKeyboardAwareScrollView = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
-  const contentContainerStyle = useMemo(
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
+  const contentContainerStyle = React.useMemo(
     () => getTwStyle(props.contentContainerStyle),
     [props]
   )
@@ -29,7 +30,9 @@ const RNKeyboardAwareScrollView = (props: Props) => {
       extraScrollHeight={50}
       style={style}
       contentContainerStyle={contentContainerStyle}
-    />
+    >
+      {props.children}
+    </KeyboardAwareScrollView>
   )
 }
 

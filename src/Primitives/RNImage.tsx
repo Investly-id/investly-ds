@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Image, ImageProps, ImageStyle, StyleProp } from 'react-native'
 
 import { getTwStyle } from '../Utils'
@@ -8,7 +8,7 @@ interface Props extends Omit<ImageProps, 'style'> {
 }
 
 const RNImage = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
 
   return <Image {...props} style={style} />
 }

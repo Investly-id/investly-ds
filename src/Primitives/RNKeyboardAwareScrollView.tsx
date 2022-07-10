@@ -1,31 +1,23 @@
-import React, { useMemo } from 'react'
-import { StyleProp, View, ViewStyle } from 'react-native'
-
+import React from 'react'
+import { ScrollView, StyleProp, ViewStyle } from 'react-native'
 
 import { getTwStyle } from '../Utils'
 
-interface Props
-  extends Omit<
-    View,
-    'style'
-  > {
+interface Props extends Omit<ScrollView, 'style'> {
   style?: StyleProp<ViewStyle> | string
 }
 
 const RNKeyboardAwareScrollView = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
 
-  return (
-    <View
-      {...props}
-      style={style}
-    />
-  )
+  return <ScrollView {...props} style={style} />
 }
 
 RNKeyboardAwareScrollView.defaultProps = {
   style: undefined,
   contentContainerStyle: undefined,
+  scrollEnabled: false,
+  showsVerticalScrollIndicator: false,
 }
 
 export default RNKeyboardAwareScrollView

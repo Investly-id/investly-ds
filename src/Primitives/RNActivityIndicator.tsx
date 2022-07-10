@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import {
   ActivityIndicator,
   ActivityIndicatorProps,
@@ -13,8 +13,8 @@ interface Props extends Omit<ActivityIndicatorProps, 'style'> {
 }
 
 const RNActivityIndicator = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
-  const color = useMemo(() => getTwColor(props.color as string), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
+  const color = React.useMemo(() => getTwColor(props.color as string), [props])
 
   return <ActivityIndicator {...props} style={style} color={color} />
 }

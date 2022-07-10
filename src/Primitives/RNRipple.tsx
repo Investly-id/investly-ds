@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
 import Ripple, { RippleProps } from 'react-native-material-ripple'
 
@@ -9,7 +9,7 @@ interface Props extends Omit<RippleProps, 'style'> {
 }
 
 const RNRipple = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
 
   return <Ripple {...props} style={style} />
 }

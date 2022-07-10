@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { RNView, Typography, Loading,Button } from 'investly-ds'
+import { RNView, Typography, Loading, Button } from 'investly-ds'
 
 const App = () => {
   useEffect(() => {

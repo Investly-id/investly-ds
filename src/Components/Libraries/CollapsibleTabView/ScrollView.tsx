@@ -28,8 +28,8 @@ const ScrollViewMemo = React.memo(
           {...props}
         />
       )
-    },
-  ),
+    }
+  )
 )
 
 /**
@@ -48,7 +48,7 @@ export const ScrollView = React.forwardRef<
       refreshControl,
       ...rest
     },
-    passRef,
+    passRef
   ) => {
     const name = useTabNameContext()
     const ref = useSharedAnimatedRef<RNScrollView>(passRef)
@@ -74,10 +74,10 @@ export const ScrollView = React.forwardRef<
     })
 
     const scrollContentSizeChangeHandlers = useChainCallback(
-      React.useMemo(() => [scrollContentSizeChange, onContentSizeChange], [
-        onContentSizeChange,
-        scrollContentSizeChange,
-      ]),
+      React.useMemo(
+        () => [scrollContentSizeChange, onContentSizeChange],
+        [onContentSizeChange, scrollContentSizeChange]
+      )
     )
 
     const memoRefreshControl = React.useMemo(
@@ -87,18 +87,18 @@ export const ScrollView = React.forwardRef<
           progressViewOffset,
           ...refreshControl.props,
         }),
-      [progressViewOffset, refreshControl],
+      [progressViewOffset, refreshControl]
     )
     const memoContentOffset = React.useMemo(
       () => ({
         y: IS_IOS ? -contentInset.value + scrollYCurrent.value : 0,
         x: 0,
       }),
-      [contentInset.value, scrollYCurrent.value],
+      [contentInset.value, scrollYCurrent.value]
     )
     const memoContentInset = React.useMemo(
       () => ({ top: contentInset.value }),
-      [contentInset.value],
+      [contentInset.value]
     )
     const memoContentContainerStyle = React.useMemo(
       () => [
@@ -106,7 +106,7 @@ export const ScrollView = React.forwardRef<
         // TODO: investigate types
         contentContainerStyle as any,
       ],
-      [_contentContainerStyle, contentContainerStyle],
+      [_contentContainerStyle, contentContainerStyle]
     )
     const memoStyle = React.useMemo(() => [_style, style], [_style, style])
 
@@ -128,5 +128,5 @@ export const ScrollView = React.forwardRef<
         {children}
       </ScrollViewMemo>
     )
-  },
+  }
 )

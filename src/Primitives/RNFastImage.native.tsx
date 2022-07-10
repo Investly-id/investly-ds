@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { ImageStyle, StyleProp } from 'react-native'
 import FastImage, { FastImageProps } from 'react-native-fast-image'
 
@@ -9,7 +9,7 @@ interface Props extends Omit<FastImageProps, 'style'> {
 }
 
 const RNImage = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
 
   return <FastImage {...props} style={style} />
 }

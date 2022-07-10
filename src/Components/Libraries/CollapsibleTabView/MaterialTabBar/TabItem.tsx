@@ -1,14 +1,14 @@
 // @ts-nocheck
-import React from "react";
-import { StyleSheet } from "react-native";
-import Ripple from "./Libraries/ButtonRipple";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import React from 'react'
+import { StyleSheet } from 'react-native'
+import Animated, { useAnimatedStyle } from 'react-native-reanimated'
 
-import { TabName } from "../types";
-import { MaterialTabItemProps } from "./types";
+import Ripple from '../../ButtonRipple'
+import { TabName } from '../types'
+import { MaterialTabItemProps } from './types'
 
-export const TABBAR_HEIGHT = 48;
-const DEFAULT_COLOR = "rgba(0, 0, 0, 1)";
+export const TABBAR_HEIGHT = 48
+const DEFAULT_COLOR = 'rgba(0, 0, 0, 1)'
 
 /**
  * Any additional props are passed to the pressable component.
@@ -25,7 +25,7 @@ export const MaterialTabItem = <T extends TabName = any>({
   labelStyle,
   activeColor = DEFAULT_COLOR,
   inactiveColor = DEFAULT_COLOR,
-  pressColor = "#DDDDDD",
+  pressColor = '#DDDDDD',
   badgeLabel,
   ...rest
 }: MaterialTabItemProps<T>): React.ReactElement => {
@@ -36,31 +36,31 @@ export const MaterialTabItem = <T extends TabName = any>({
         Math.abs(index - indexDecimal.value) < 0.5
           ? activeColor
           : inactiveColor,
-    };
-  }, []);
+    }
+  }, [])
 
   const styleBadge = useAnimatedStyle(() => {
     return {
       backgroundColor:
-        Math.abs(index - indexDecimal.value) < 0.5 ? activeColor : "#E2E2E4",
+        Math.abs(index - indexDecimal.value) < 0.5 ? activeColor : '#E2E2E4',
       width: 20,
       height: 20,
       borderRadius: 10,
       marginLeft: 8,
-      justifyContent: "center",
-      alignItems: "center",
-    };
-  }, []);
+      justifyContent: 'center',
+      alignItems: 'center',
+    }
+  }, [])
 
   const styleBadgeLabel = useAnimatedStyle(() => {
     return {
       color:
-        Math.abs(index - indexDecimal.value) < 0.5 ? "white" : inactiveColor,
+        Math.abs(index - indexDecimal.value) < 0.5 ? 'white' : inactiveColor,
       fontSize: 10,
       lineHeight: 18,
-      fontFamily: "Inter-Bold",
-    };
-  }, []);
+      fontFamily: 'Inter-Bold',
+    }
+  }, [])
   return (
     <Ripple
       onLayout={onLayout}
@@ -86,21 +86,21 @@ export const MaterialTabItem = <T extends TabName = any>({
         </Animated.View>
       )}
     </Ripple>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   grow: {
     flex: 1,
   },
   item: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 10,
     height: TABBAR_HEIGHT,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   label: {
     margin: 4,
   },
-});
+})

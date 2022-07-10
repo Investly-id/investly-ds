@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { ScrollView, ScrollViewProps, StyleProp, ViewStyle } from 'react-native'
 
 import { getTwStyle } from '../Utils'
@@ -10,8 +10,8 @@ interface Props
 }
 
 const RNScrollView = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
-  const contentContainerStyle = useMemo(
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
+  const contentContainerStyle = React.useMemo(
     () => getTwStyle(props.contentContainerStyle),
     [props]
   )

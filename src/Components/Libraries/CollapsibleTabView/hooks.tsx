@@ -1,39 +1,38 @@
-import {
-  useMemo,
+import React, {
   Children,
-  useState,
+  MutableRefObject,
   useCallback,
   useContext,
-  MutableRefObject,
   useEffect,
+  useState,
 } from 'react'
 import { StyleSheet } from 'react-native'
-import { ContainerRef, RefComponent } from './types'
 import Animated, {
   cancelAnimation,
+  Extrapolate,
+  interpolate,
+  runOnJS,
+  runOnUI,
   useAnimatedReaction,
   useAnimatedRef,
   useAnimatedScrollHandler,
+  useDerivedValue,
   useSharedValue,
   withDelay,
   withTiming,
-  interpolate,
-  Extrapolate,
-  runOnJS,
-  runOnUI,
-  useDerivedValue,
 } from 'react-native-reanimated'
 import { useDeepCompareMemo } from 'use-deep-compare'
 
 import { Context, TabNameContext } from './Context'
 import { IS_IOS, ONE_FRAME_MS, scrollToImpl } from './helpers'
+import { ContainerRef, RefComponent } from './types'
 import {
   CollapsibleStyle,
   ContextType,
+  Ref,
   TabName,
   TabReactElement,
   TabsWithProps,
-  Ref,
 } from './types'
 
 export function useContainerRef() {
@@ -42,14 +41,14 @@ export function useContainerRef() {
 
 export function useAnimatedDynamicRefs(): [
   ContextType['refMap'],
-  ContextType['setRef'],
+  ContextType['setRef']
 ] {
   const [map, setMap] = useState<ContextType['refMap']>({})
   const setRef = useCallback(function <T extends RefComponent>(
     key: TabName,
-    ref: React.RefObject<T>,
+    ref: React.RefObject<T>
   ) {
-    setMap(map => ({ ...map, [key]: ref }))
+    setMap((map) => ({ ...map, [key]: ref }))
     return ref
   },
   [])
@@ -59,9 +58,9 @@ export function useAnimatedDynamicRefs(): [
 
 export function useTabProps<T extends TabName>(
   children: TabReactElement<T>[] | TabReactElement<T>,
-  tabType: Function,
+  tabType: Function
 ): [TabsWithProps<T>, T[]] {
-  const options = useMemo(() => {
+  const options = React.useMemo(() => {
     const tabOptions: TabsWithProps<T> = new Map()
     if (children) {
       Children.forEach(children, (element, index) => {
@@ -69,7 +68,7 @@ export function useTabProps<T extends TabName>(
 
         if (element.type !== tabType)
           throw new Error(
-            'Container children must be wrapped in a <Tabs.Tab ... /> component',
+            'Container children must be wrapped in a <Tabs.Tab ... /> component'
           )
 
         // make sure children is excluded otherwise our props will mutate too much
@@ -137,7 +136,7 @@ export function useCollapsibleStyle(): CollapsibleStyle {
     useConvertAnimatedToValue(tabBarHeight),
     useConvertAnimatedToValue(headerHeight),
   ]
-  return useMemo(
+  return React.useMemo(
     () => ({
       style: { width },
       contentContainerStyle: {
@@ -163,7 +162,7 @@ export function useCollapsibleStyle(): CollapsibleStyle {
       headerHeightVal,
       tabBarHeightVal,
       width,
-    ],
+    ]
   )
 }
 
@@ -175,14 +174,14 @@ export function useUpdateScrollViewContentSize({ name }: { name: TabName }) {
       contentHeights.value[tabIndex] = height
       contentHeights.value = [...contentHeights.value]
     },
-    [contentHeights, tabNames],
+    [contentHeights, tabNames]
   )
 
   const scrollContentSizeChange = useCallback(
     (_: number, h: number) => {
       runOnUI(setContentHeights)(name, h)
     },
-    [setContentHeights, name],
+    [setContentHeights, name]
   )
 
   return scrollContentSizeChange
@@ -197,13 +196,13 @@ export function useUpdateScrollViewContentSize({ name }: { name: TabName }) {
 export function useChainCallback(fns: (Function | undefined)[]) {
   const callAll = useCallback(
     (...args: unknown[]) => {
-      fns.forEach(fn => {
+      fns.forEach((fn) => {
         if (typeof fn === 'function') {
           fn(...args)
         }
       })
     },
-    [fns],
+    [fns]
   )
   return callAll
 }
@@ -217,7 +216,7 @@ export function useScroller<T extends RefComponent>() {
       x: number,
       y: number,
       animated: boolean,
-      _debugKey: string,
+      _debugKey: string
     ) => {
       'worklet'
       if (!ref) return
@@ -227,7 +226,7 @@ export function useScroller<T extends RefComponent>() {
       // )
       scrollToImpl(ref, x, y - contentInset.value, animated)
     },
-    [contentInset],
+    [contentInset]
   )
 
   return scroller
@@ -266,7 +265,7 @@ export const useScrollHandlerY = (name: TabName) => {
     (toggle: boolean) => {
       enabled.value = toggle
     },
-    [enabled],
+    [enabled]
   )
 
   /**
@@ -277,10 +276,10 @@ export const useScrollHandlerY = (name: TabName) => {
    */
   const afterDrag = useSharedValue(0)
 
-  const tabIndex = useMemo(() => tabNames.value.findIndex(n => n === name), [
-    tabNames,
-    name,
-  ])
+  const tabIndex = React.useMemo(
+    () => tabNames.value.findIndex((n) => n === name),
+    [tabNames, name]
+  )
 
   const scrollTo = useScroller()
 
@@ -312,7 +311,7 @@ export const useScrollHandlerY = (name: TabName) => {
                 undefined,
                 () => {
                   isSnapping.value = false
-                },
+                }
               )
 
               if (scrollYCurrent.value < headerScrollDistance.value) {
@@ -321,7 +320,7 @@ export const useScrollHandlerY = (name: TabName) => {
                   0,
                   headerScrollDistance.value,
                   true,
-                  `[${name}] sticky snap up`,
+                  `[${name}] sticky snap up`
                 )
               }
             }
@@ -348,7 +347,7 @@ export const useScrollHandlerY = (name: TabName) => {
             0,
             headerScrollDistance.value,
             true,
-            `[${name}] snap up`,
+            `[${name}] snap up`
           )
         }
         isSnapping.value = false
@@ -364,7 +363,7 @@ export const useScrollHandlerY = (name: TabName) => {
 
   const scrollHandler = useAnimatedScrollHandler(
     {
-      onScroll: event => {
+      onScroll: (event) => {
         if (!enabled.value) return
 
         if (focusedTab.value === name) {
@@ -396,7 +395,7 @@ export const useScrollHandlerY = (name: TabName) => {
               // scrolling down
               accDiffClamp.value = Math.min(
                 headerScrollDistance.value,
-                nextValue,
+                nextValue
               )
             } else if (delta < 0) {
               // scrolling up
@@ -412,7 +411,7 @@ export const useScrollHandlerY = (name: TabName) => {
           // set it back to 0 after a few frames without active scrolling
           isScrolling.value = withDelay(
             ONE_FRAME_MS * 3,
-            withTiming(0, { duration: 0 }),
+            withTiming(0, { duration: 0 })
           )
         }
       },
@@ -437,7 +436,7 @@ export const useScrollHandlerY = (name: TabName) => {
           // we delay this by one frame so that onMomentumBegin may fire on iOS
           afterDrag.value = withDelay(
             ONE_FRAME_MS,
-            withTiming(0, { duration: 0 }, isFinished => {
+            withTiming(0, { duration: 0 }, (isFinished) => {
               // if the animation is finished, the onMomentumBegin has
               // never started, so we need to manually trigger the onMomentumEnd
               // to make sure we snap
@@ -445,7 +444,7 @@ export const useScrollHandlerY = (name: TabName) => {
                 isGliding.value = false
                 onMomentumEnd()
               }
-            }),
+            })
           )
         }
       },
@@ -467,7 +466,7 @@ export const useScrollHandlerY = (name: TabName) => {
       snapThreshold,
       enabled,
       scrollTo,
-    ],
+    ]
   )
 
   // sync unfocused scenes
@@ -527,7 +526,7 @@ export const useScrollHandlerY = (name: TabName) => {
         }
       }
     },
-    [revealHeaderOnScroll, refMap, snapThreshold, tabIndex, enabled, scrollTo],
+    [revealHeaderOnScroll, refMap, snapThreshold, tabIndex, enabled, scrollTo]
   )
 
   return { scrollHandler, enable }
@@ -545,7 +544,7 @@ type ForwardRefType<T> =
  * @returns an animated ref
  */
 export function useSharedAnimatedRef<T extends RefComponent>(
-  outerRef: ForwardRefType<T>,
+  outerRef: ForwardRefType<T>
 ) {
   const ref = useAnimatedRef<T>()
 
@@ -580,7 +579,7 @@ export function useAfterMountEffect(effect: React.EffectCallback) {
 }
 
 export function useConvertAnimatedToValue<T>(
-  animatedValue: Animated.SharedValue<T>,
+  animatedValue: Animated.SharedValue<T>
 ) {
   const [value, setValue] = useState(animatedValue.value)
 
@@ -588,12 +587,12 @@ export function useConvertAnimatedToValue<T>(
     () => {
       return animatedValue.value
     },
-    animValue => {
+    (animValue) => {
       if (animValue !== value) {
         runOnJS(setValue)(animValue)
       }
     },
-    [value],
+    [value]
   )
 
   return value

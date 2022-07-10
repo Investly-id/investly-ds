@@ -1,5 +1,5 @@
 // import { useHeaderHeight } from '@react-navigation/elements'
-import React, { useMemo, useRef } from 'react'
+import React, { useRef } from 'react'
 import {
   KeyboardAvoidingView,
   KeyboardAvoidingViewProps,
@@ -17,13 +17,13 @@ interface Props extends Omit<KeyboardAvoidingViewProps, 'style'> {
 const RNKeyboardAvoidingView = (props: Props) => {
   // const headerHeight = useHeaderHeight()
   const headerHeight = 80
-  const style = useMemo(() => getTwStyle(props.style), [props])
-  const contentStyle = useMemo(
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
+  const contentStyle = React.useMemo(
     () => getTwStyle(props.contentContainerStyle),
     [props]
   )
   const enableKeyboardAvoidingView = useRef(Platform.OS === 'ios').current
-  const keyboardVerticalOffset = useMemo(() => {
+  const keyboardVerticalOffset = React.useMemo(() => {
     return Platform.OS === 'ios' ? headerHeight + 20 : 0
   }, [headerHeight])
 

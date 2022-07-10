@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { StyleProp, ViewStyle } from 'react-native'
 import { SafeAreaView, SafeAreaViewProps } from 'react-native-safe-area-context'
 
@@ -9,7 +9,7 @@ interface Props extends Omit<SafeAreaViewProps, 'style'> {
 }
 
 const RNSafeAreaView = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
 
   return <SafeAreaView {...props} style={style} />
 }

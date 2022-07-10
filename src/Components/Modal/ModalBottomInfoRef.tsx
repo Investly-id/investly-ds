@@ -2,7 +2,6 @@ import React, {
   forwardRef,
   useCallback,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -63,7 +62,7 @@ const ModalBottomInfoRef = forwardRef<ModalBottomInfoRefHandle, Props>(
       [hide]
     )
 
-    const button = useMemo(() => {
+    const button = React.useMemo(() => {
       if (config.buttonLeft && config.buttonRight) {
         return (
           <RNView style='mt-5 flex-row'>

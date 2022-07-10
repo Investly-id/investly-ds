@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useEffect,
   useImperativeHandle,
-  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -107,7 +106,7 @@ const InputField = forwardRef<InputFieldHandle, Props>(
       value,
     })
 
-    const schema = useMemo(() => {
+    const schema = React.useMemo(() => {
       if (!rules || !label) {
         return null
       }
@@ -175,7 +174,7 @@ const InputField = forwardRef<InputFieldHandle, Props>(
       [validateValue, valueFormatter]
     )
 
-    const refMethod = useMemo(
+    const refMethod = React.useMemo(
       () => () => ({
         validate: (setErrorMessage?: boolean) =>
           validateValueAsync(value, setErrorMessage),

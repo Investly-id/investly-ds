@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { StyleProp, View, ViewProps, ViewStyle } from 'react-native'
 
 import { getTwStyle } from '../Utils'
@@ -8,7 +8,7 @@ interface Props extends Omit<ViewProps, 'style'> {
 }
 
 const RNView = (props: Props) => {
-  const style = useMemo(() => getTwStyle(props.style), [props])
+  const style = React.useMemo(() => getTwStyle(props.style), [props])
 
   return <View {...props} style={style} />
 }
